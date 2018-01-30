@@ -150,6 +150,35 @@ function getHash() {
 	return hash;
 }
 
+function randomSkill(){
+	var initValue = 0;
+	var finalValue = 0;
+	var selectedSkill = null;
+	var skillArray = [];
+	var randNumber = 0;
+	$("div.totalPoints").each(function(index) {
+		initValue += parseInt($(this).find("span").text());
+	});
+	if (initValue >= 67){
+		alert("Max level reached");
+		return;
+	}
+	while(initValue == finalValue || finalValue == 0 ){
+		finalValue = 0;
+		$("div.skill").each(function(index){
+			if($(this).attr("data-points") < $(this).attr("data-max")){
+				skillArray.push(this);
+			}
+		});
+		//alert(skillArray);
+		randNumber = Math.floor(Math.random() * skillArray.length);
+		updatePoints($(skillArray[randNumber]), 1);
+		$("div.totalPoints").each(function(index) {
+			finalValue += parseInt($(this).find("span").text());
+		});
+	}
+}
+
 $(document).ready(function () {
 	$('div.skill').mousedown(handleMousedown);
 	$('div.skill').mouseup(handleMouseup);
